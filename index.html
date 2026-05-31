@@ -17,12 +17,10 @@
           let marker = this.el;
           let vid = document.querySelector('#arVideo');
 
-          // Marker kamerada göründüğünde videoyu başlat
           marker.addEventListener('markerFound', function () {
             vid.play();
           });
 
-          // Marker kameradan çıktığında videoyu durdur
           marker.addEventListener('markerLost', function () {
             vid.pause();
           });
@@ -37,16 +35,17 @@
       embedded
       arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono; matrixCodeType: 3x3;">
 
-      <a-assets>
-        <img id="arImage" src="IMG_9181xyz.jpg" crossorigin="anonymous">
-        <video id="arVideo" src="sabit_araba_hareketli_agaclar.mp4"
+      <!-- Yüklenecek Medyalar: timeout eklendi, dosya isimleri basitleştirildi -->
+      <a-assets timeout="10000">
+        <img id="arImage" src="image.jpg" crossorigin="anonymous">
+        <video id="arVideo" src="video.mp4"
                preload="auto" loop crossorigin="anonymous"
                webkit-playsinline autoplay muted playsinline></video>
       </a-assets>
 
       <a-marker
         type="pattern"
-        url="IMG_9181xyz.jpg"
+        url="pattern-marker.patt"
         smooth="true"
         smoothCount="10"
         smoothTolerance="0.01"
@@ -54,6 +53,7 @@
         emitevents="true"
         markerhandler>
 
+        <!-- SOL TARAF: Görsel -->
         <a-image
           src="#arImage"
           rotation="-90 0 0"
@@ -63,6 +63,7 @@
           opacity="1">
         </a-image>
 
+        <!-- SAĞ TARAF: Video -->
         <a-video
           src="#arVideo"
           rotation="-90 0 0"
