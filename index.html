@@ -10,6 +10,25 @@
       * { margin: 0; padding: 0; }
       body { overflow: hidden; background: #000; }
     </style>
+    
+    <script>
+      AFRAME.registerComponent('markerhandler', {
+        init: function () {
+          let marker = this.el;
+          let vid = document.querySelector('#arVideo');
+
+          // Marker kamerada göründüğünde videoyu başlat
+          marker.addEventListener('markerFound', function () {
+            vid.play();
+          });
+
+          // Marker kameradan çıktığında videoyu durdur
+          marker.addEventListener('markerLost', function () {
+            vid.pause();
+          });
+        }
+      });
+    </script>
   </head>
   <body>
     <a-scene
@@ -19,7 +38,10 @@
       arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono; matrixCodeType: 3x3;">
 
       <a-assets>
-        <img id="arImage" src="IMG_9181xyz" crossorigin="anonymous">
+        <img id="arImage" src="IMG_9181xyz.jpg" crossorigin="anonymous">
+        <video id="arVideo" src="Sabit_Araba_Hareketli_Ağaçlar_Videosu (1).mp4"
+               preload="auto" loop crossorigin="anonymous"
+               webkit-playsinline autoplay muted playsinline></video>
       </a-assets>
 
       <a-marker
@@ -29,16 +51,26 @@
         smoothCount="10"
         smoothTolerance="0.01"
         smoothThreshold="5"
-        emitevents="true">
+        emitevents="true"
+        markerhandler>
 
         <a-image
           src="#arImage"
           rotation="-90 0 0"
-          position="0 0.01 0"
-          width="2.4"
-          height="1.6"
+          position="-0.65 0.01 0"
+          width="1.2"
+          height="0.8"
           opacity="1">
         </a-image>
+
+        <a-video
+          src="#arVideo"
+          rotation="-90 0 0"
+          position="0.65 0.01 0"
+          width="1.2"
+          height="0.8"
+          opacity="1">
+        </a-video>
 
       </a-marker>
 
